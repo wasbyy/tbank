@@ -1,6 +1,6 @@
-<script>
+<script lang="ts">
   import { onMount } from 'svelte';
-
+  
   let avatar = '/avatar.png';
   
   onMount(() => {
@@ -28,128 +28,92 @@
   </div>
 
   <main>
-    <div class="forum-header">
-      <h1>Студенческий форум</h1>
-      <p>5000 участников</p>
-    </div>
+    <h1 class="main-title">Твой ФФ - университет в одном клике.</h1>
 
-    <div class="content">
-      <div class="left-panel">
-        <div class="section-header">
-          <span class="section-icon">≡</span>
-          <h2>Статьи</h2>
+    <!-- Main circular buttons -->
+    <div class="circular-buttons">
+      <div class="circular-button">
+        <div class="circle blue">
+          <div class="icon-placeholder"></div>
         </div>
-
-        <div class="posts">
-          <div class="post">
-            <div class="user-avatar"></div>
-            <div class="post-content">
-              <div class="post-image-container">
-                <div class="post-image-placeholder"></div>
-              </div>
-              <h3 class="post-title">Лежала на диване в Б корпусе, чья?</h3>
-              <div class="post-meta">
-                <span class="meta-item date">
-                  <img src="/mdi_calendar.svg" alt="Дата" /> 20 мая
-                </span>
-                <span class="meta-item views">
-                  <img src="/viev.svg" alt="Просмотры" /> 120
-                </span>
-                <span class="meta-item replies">
-                  <img src="/otvet.svg" alt="Ответы" /> 2 ответа
-                </span>
-              </div>
-              <button class="view-replies">Смотреть ответы</button>
-            </div>
-          </div>
-
-          <div class="post">
-            <div class="user-avatar"></div>
-            <div class="post-content">
-              <div class="post-image-container">
-                <div class="post-image-placeholder"></div>
-              </div>
-              <h3 class="post-title">Чей кейс от наушников? Т корпус</h3>
-              <div class="post-meta">
-                <span class="meta-item date">
-                  <img src="/mdi_calendar.svg" alt="Дата" />
-                </span>
-                <span class="meta-item views">
-                  <img src="/viev.svg" alt="Просмотры" /> 20
-                </span>
-                <span class="meta-item replies">
-                  <img src="/otvet.svg" alt="Ответы" /> 1 ответ
-                </span>
-              </div>
-              <button class="view-replies">Смотреть ответы</button>
-            </div>
-          </div>
-        </div>
+        <span>Бесплатный курс "Вычматика" по математике</span>
       </div>
-
-      <div class="right-panel">
-        <div class="about-forum">
-          <div class="section-header">
-            <span class="section-icon">≡</span>
-            <h2>О форуме</h2>
-          </div>
-          
-          <div class="info-block">
-            <span class="info-icon">
-              <img src="/info.svg" alt="Информация" />
-            </span>
-            <p>Добро пожаловать на Студенческий Хаб — место, где встречаются знания, опыт и студенческая жизнь!</p>
-          </div>
-          
-          <p class="about-text">
-            Неважно, первокурсник ты или выпускник – здесь каждый найдёт что-то полезное (и забавное).
-            Присоединяйся, задавай вопросы, делись опытом и делай студенческие годы ярче!
-          </p>
+      <div class="circular-button">
+        <div class="circle light-blue">
+          <div class="icon-placeholder"></div>
         </div>
-
-        <div class="topics">
-          <div class="section-header">
-            <span class="section-icon">≡</span>
-            <h2>Темы</h2>
-          </div>
-          
-          <div class="topic-icons">
-            <div class="topic">
-              <div class="topic-icon">
-                <img src="/cute house.svg" alt="Флудилка" class="icon-house" />
-              </div>
-              <span>Флудилка</span>
-            </div>
-            <div class="topic">
-              <div class="topic-icon">
-                <img src="/search cute blue icon.svg" alt="Потеряшки" class="icon-search" />
-              </div>
-              <span>Потеряшки</span>
-            </div>
-            <div class="topic">
-              <div class="topic-icon">
-                <img src="/blue speech bubble.svg" alt="Подслушано" class="icon-speech" />
-              </div>
-              <span>Подслушано</span>
-            </div>
-            <div class="topic">
-              <div class="topic-icon">
-                <img src="/cute books.svg" alt="Конспекты" class="icon-books" />
-              </div>
-              <span>Конспекты</span>
-            </div>
-            <div class="topic">
-              <div class="topic-icon">
-                <img src="/thumbs up.svg" alt="Полезное" class="icon-thumbs" />
-              </div>
-              <span>Полезное</span>
-            </div>
-          </div>
+        <span>Изменения в расписании</span>
+      </div>
+      <div class="circular-button">
+        <div class="circle pink">
+          <div class="icon-placeholder"></div>
         </div>
+        <span>Новинки недели в столовой</span>
+      </div>
+      <div class="circular-button">
+        <div class="circle beige">
+          <div class="icon-placeholder"></div>
+        </div>
+        <span>Открытие лаборатории в корпусе Б</span>
+      </div>
+      <div class="circular-button">
+        <div class="circle green">
+          <div class="icon-placeholder"></div>
+        </div>
+        <span>Студенты ФФ и кафедры</span>
+      </div>
+      <div class="circular-button">
+        <div class="circle gray">
+          <div class="icon-placeholder"></div>
+        </div>
+        <span>Для иностранных студентов</span>
       </div>
     </div>
+
+    <!-- Services section -->
+    <section class="services">
+      <h2>Сервисы</h2>
+      <div class="services-grid">
+        <div class="service-card">
+          <div class="service-icon">
+            <img src="/main_page/map and pencil.svg" alt="Карта корпусов" />
+          </div>
+          <h3>Карта корпусов</h3>
+        </div>
+        <div class="service-card">
+          <div class="service-icon">
+            <img src="/main_page/cute calendar.svg" alt="Афиша мероприятий" />
+          </div>
+          <h3>Афиша мероприятий</h3>
+        </div>
+        <div class="service-card">
+          <div class="service-icon">
+            <img src="/main_page/cute books.svg" alt="База знаний" />
+          </div>
+          <h3>База знаний</h3>
+        </div>
+        <div class="service-card">
+          <div class="service-icon">
+            <img src="/main_page/search cute blue icon.svg" alt="Бюро находок" />
+          </div>
+          <h3>Бюро находок</h3>
+        </div>
+        <div class="service-card">
+          <div class="service-icon">
+            <img src="/main_page/cute shopping basket.svg" alt="Меню столовой" />
+          </div>
+          <h3>Меню столовой</h3>
+        </div>
+        <div class="service-card">
+          <div class="service-icon">
+            <img src="/main_page/emoji with tongue.svg" alt="Мемы от студентов" />
+          </div>
+          <h3>Мемы от студентов</h3>
+        </div>
+      </div>
+    </section>
   </main>
-  
+
   <div class="chat-bot">
     <img src="/chatbot head.svg" alt="Чат-бот" />
   </div>
@@ -206,6 +170,13 @@
     height: 18px;
   }
 
+  /* Profile */
+  .profile {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+  }
+
   .avatar {
     width: 40px;
     height: 40px;
@@ -213,239 +184,116 @@
     background-color: #333;
   }
 
-  .profile {
-    position: fixed;
-    top: 20px;
-    right: 20px;
-  }
-
-  /* Forum Header */
-  .forum-header {
+  /* Main content */
+  .main-title {
+    text-align: center;
     margin: 40px 0;
-    text-align: center;
-  }
-
-  .forum-header h1 {
     font-size: 32px;
-    margin-bottom: 10px;
   }
 
-  .forum-header p {
-    color: #666;
-    margin: 0;
-  }
-
-  /* Content Layout */
-  .content {
+  /* Circular buttons */
+  .circular-buttons {
     display: flex;
-    gap: 20px;
-  }
-
-  .left-panel {
-    flex: 1.5;
-    background-color: #e6e6e6;
-    border-radius: 15px;
-    padding: 20px;
-  }
-
-  .right-panel {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-  }
-
-  .about-forum, .topics {
-    background-color: #e6e6e6;
-    border-radius: 15px;
-    padding: 20px;
-  }
-
-  /* Section Headers */
-  .section-header {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 20px;
-    background-color: #c0c0c0;
-    padding: 8px 15px;
-    border-radius: 12px;
-    width: fit-content;
-  }
-
-  .section-icon {
-    font-size: 22px;
-  }
-
-  .section-header h2 {
-    font-size: 18px;
-    margin: 0;
-    font-weight: normal;
-  }
-
-  /* Posts */
-  .posts {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-  }
-
-  .post {
-    display: flex;
-    gap: 8px;
-  }
-
-  .user-avatar {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    background-color: #ffffff;
-    flex-shrink: 0;
-    margin-top: 5px;
-  }
-
-  .post-content {
-    flex: 1;
-    position: relative;
-    padding-left: 5px;
-  }
-
-  .post-image-container {
-    display: flex;
-    justify-content: flex-start;
-    width: 100%;
-  }
-
-  .post-image-placeholder {
-    width: 70%;
-    height: 150px;
-    background-color: #ffffff;
-    border-radius: 10px;
-    margin-bottom: 15px;
-  }
-
-  .post-title {
-    font-size: 18px;
-    margin: 0 0 15px 0;
-    font-weight: normal;
-    text-align: left;
-  }
-
-  .post-meta {
-    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
     gap: 15px;
-    margin-bottom: 15px;
-    color: #888;
-    font-size: 14px;
-    align-items: center;
-  }
-  
-  .meta-item {
-    display: flex;
-    align-items: center;
-    gap: 5px;
+    margin: 40px 0;
   }
 
-  .meta-item img {
-    width: 18px;
-    height: 18px;
-  }
-
-  .view-replies {
-    background-color: #cccccc;
-    border: none;
-    border-radius: 20px;
-    padding: 8px 0;
-    width: 45%;
-    cursor: pointer;
-    font-size: 14px;
-    color: #333;
-    text-align: center;
-    margin-left: 10%;
-  }
-
-  /* About Forum */
-  .info-block {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 10px;
-  }
-
-  .info-icon {
-    font-size: 22px;
-    display: flex;
-    align-items: center;
-  }
-
-  .info-icon img {
-    width: 20px;
-    height: 20px;
-  }
-
-  .about-text {
-    margin: 0;
-    line-height: 1.5;
-    color: #333;
-  }
-
-  /* Topics */
-  .topics {
-    padding: 25px;
-  }
-
-  .topic-icons {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 25px;
-  }
-
-  .topic {
+  .circular-button {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 12px;
-    font-size: 14px;
+    width: 140px;
+    text-align: center;
   }
 
-  .topic-icon {
-    width: 60px;
-    height: 60px;
+  .circle {
+    width: 100px;
+    height: 100px;
     border-radius: 50%;
+    margin-bottom: 10px;
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: #c0c0c0;
   }
 
-  .topic-icon img {
-    max-width: 100%;
-    max-height: 100%;
+  .circle.blue { background-color: #7CD7F7; }
+  .circle.light-blue { background-color: #B8E3F5; }
+  .circle.pink { background-color: #FFD6CC; }
+  .circle.beige { background-color: #E5D6CC; }
+  .circle.green { background-color: #B8F5CC; }
+  .circle.gray { background-color: #E6E6E6; }
+
+  .icon-placeholder {
+    width: 60px;
+    height: 60px;
+    background-color: rgba(255, 255, 255, 0.5);
   }
 
-  /* Custom icon sizes with higher specificity */
-  .topic-icon .icon-house {
-    width: 48px !important;
-    height: 38px !important;
+  .circular-button span {
+    font-size: 14px;
+    line-height: 1.3;
   }
 
-  .topic-icon .icon-search {
-    width: 38px !important;
-    height: 37px !important;
+  /* Services section */
+  .services {
+    margin: 60px 0;
+    padding: 0 20px;
   }
 
-  .topic-icon .icon-speech {
-    width: 41px !important;
-    height: 57px !important;
+  .services h2 {
+    margin-bottom: 30px;
+    font-size: 24px;
+    padding-left: 20px;
   }
 
-  .topic-icon .icon-books {
-    width: 40px !important;
-    height: 40px !important;
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
   }
 
-  .topic-icon .icon-thumbs {
-    width: 35px !important;
-    height: 40px !important;
+  .service-card {
+    background-color: #E4E4E4;
+    border-radius: 20px;
+    padding: 30px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 20px;
+    min-height: 120px;
+    transition: transform 0.2s ease;
+    cursor: pointer;
+    position: relative;
+  }
+
+  .service-card:hover {
+    transform: translateY(-5px);
+  }
+
+  .service-card h3 {
+    margin: 0;
+    font-size: 24px;
+    font-weight: 500;
+    line-height: 1.2;
+    order: 1;
+  }
+
+  .service-icon {
+    width: 100px;
+    height: 100px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    order: 2;
+  }
+
+  .service-icon img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
   }
 
   /* Chat Bot */
