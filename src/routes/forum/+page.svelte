@@ -62,12 +62,16 @@
       <button class="nav-button">
         Расписание <span class="icon"><img src="/top1.svg" alt="Расписание" /></span>
       </button>
-      <button class="nav-button">
-        Форум <span class="icon"><img src="/top2.svg" alt="Форум" /></span>
-      </button>
-      <button class="nav-button">
-        Сервисы <span class="icon"><img src="/top3.svg" alt="Сервисы" /></span>
-      </button>
+      <a href="/forum" class="nav-link">
+        <button class="nav-button active">
+          Форум <span class="icon"><img src="/top2.svg" alt="Форум" /></span>
+        </button>
+      </a>
+      <a href="/" class="nav-link">
+        <button class="nav-button">
+          Сервисы <span class="icon"><img src="/top3.svg" alt="Сервисы" /></span>
+        </button>
+      </a>
     </div>
   </header>
 
@@ -224,10 +228,38 @@
 </div>
 
 <style>
+  @font-face {
+    font-family: 'SF Pro Display';
+    src: url('/font/SF-Pro-Display-Regular.otf') format('opentype');
+    font-weight: 400;
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: 'SF Pro Display';
+    src: url('/font/SF-Pro-Display-Medium.otf') format('opentype');
+    font-weight: 500;
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: 'SF Pro Display';
+    src: url('/font/SF-Pro-Display-Bold.otf') format('opentype');
+    font-weight: 700;
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: 'SF Pro Display';
+    src: url('/font/SF-Pro-Display-Light.otf') format('opentype');
+    font-weight: 300;
+    font-style: normal;
+  }
+
   :global(body) {
     margin: 0;
     padding: 0;
-    font-family: Arial, sans-serif;
+    font-family: 'SF Pro Display', Arial, sans-serif;
     background-color: #ffffff;
   }
 
@@ -486,8 +518,8 @@
   }
 
   .topic-icon {
-    width: 45px;
-    height: 45px;
+    width: 55px;
+    height: 55px;
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -598,5 +630,13 @@
   .chat-bot img {
     width: 65px;
     height: 65px;
+  }
+
+  .nav-link {
+    text-decoration: none;
+  }
+
+  .nav-button.active {
+    background-color: #e0e0e0;
   }
 </style>
