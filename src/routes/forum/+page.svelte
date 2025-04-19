@@ -57,28 +57,6 @@
 </script>
 
 <div class="container">
-  <header class="navbar">
-    <div class="nav-buttons">
-      <button class="nav-button">
-        Расписание <span class="icon"><img src="/top1.svg" alt="Расписание" /></span>
-      </button>
-      <a href="/forum" class="nav-link">
-        <button class="nav-button active">
-          Форум <span class="icon"><img src="/top2.svg" alt="Форум" /></span>
-        </button>
-      </a>
-      <a href="/" class="nav-link">
-        <button class="nav-button">
-          Сервисы <span class="icon"><img src="/top3.svg" alt="Сервисы" /></span>
-        </button>
-      </a>
-    </div>
-  </header>
-
-  <div class="profile">
-    <div class="avatar"></div>
-  </div>
-
   <main>
     <div class="forum-header">
       <h1>Студенческий форум</h1>

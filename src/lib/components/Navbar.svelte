@@ -1,24 +1,31 @@
-<script>
-  export let currentPage = "/"; // По умолчанию активна главная страница
+<script lang="ts">
+  import { page } from '$app/stores';
+  
+  $: currentRoute = $page.url.pathname;
 </script>
 
-<header class="navbar">
+<nav class="navbar">
   <div class="nav-buttons">
-    <button class="nav-button">
-      Расписание <span class="icon"><img src="/top1.svg" alt="Расписание" /></span>
-    </button>
+    <a href="/schedule" class="nav-link">
+      <button class="nav-button {currentRoute === '/schedule' ? 'active' : ''}">
+        Расписание <span class="icon"><img src="/top1.svg" alt="Расписание"></span>
+      </button>
+    </a>
     <a href="/forum" class="nav-link">
-      <button class="nav-button {currentPage === '/forum' ? 'active' : ''}">
-        Форум <span class="icon"><img src="/top2.svg" alt="Форум" /></span>
+      <button class="nav-button {currentRoute === '/forum' ? 'active' : ''}">
+        Форум <span class="icon"><img src="/top2.svg" alt="Форум"></span>
       </button>
     </a>
     <a href="/" class="nav-link">
-      <button class="nav-button {currentPage === '/' ? 'active' : ''}">
-        Сервисы <span class="icon"><img src="/top3.svg" alt="Сервисы" /></span>
+      <button class="nav-button {currentRoute === '/' ? 'active' : ''}">
+        Сервисы <span class="icon"><img src="/top3.svg" alt="Сервисы"></span>
       </button>
     </a>
+    <a href="https://t.me/" target="_blank" class="tg-link">
+      <img src="/tg_icon.svg" alt="Telegram" class="tg-icon">
+    </a>
   </div>
-</header>
+</nav>
 
 <style>
   /* Navbar */
@@ -26,12 +33,18 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 20px 0;
+    padding: 0;
+    margin: 0;
+    padding-top: 10px;
+    width: 100%;
   }
 
   .nav-buttons {
     display: flex;
     gap: 15px;
+    align-items: center;
+    margin: 0;
+    padding: 0;
   }
 
   .nav-button {
@@ -44,6 +57,12 @@
     align-items: center;
     gap: 5px;
     cursor: pointer;
+    transition: background-color 0.2s;
+    margin: 0;
+  }
+
+  .nav-button:hover {
+    background-color: #e0e0e0;
   }
 
   .icon {
@@ -59,9 +78,46 @@
 
   .nav-link {
     text-decoration: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .tg-link {
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+  }
+
+  .tg-icon {
+    width: 32px;
+    height: 32px;
+    cursor: pointer;
   }
 
   .nav-button.active {
-    background-color: #e0e0e0;
+    background-color: #d0d0d0;
+  }
+
+  @media (max-width: 768px) {
+    .nav-buttons {
+      gap: 10px;
+    }
+    
+    .nav-button {
+      font-size: 14px;
+      padding: 6px 12px;
+    }
+    
+    .icon img {
+      width: 16px;
+      height: 16px;
+    }
+    
+    .tg-icon {
+      width: 26px;
+      height: 26px;
+    }
   }
 </style> 

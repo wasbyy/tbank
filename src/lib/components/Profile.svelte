@@ -3,23 +3,24 @@
 </script>
 
 <div class="profile">
-  <div class="avatar"></div>
+  <div class="avatar" style="background-image: url({avatar})"></div>
 </div>
 
 <style>
-  /* Profile */
   .profile {
     position: fixed;
-    top: 20px;
-    right: 20px;
+    top: 40px;
+    right: 40px;
     z-index: 100;
   }
 
   .avatar {
-    width: 40px;
-    height: 40px;
+    width: 50px;
+    height: 50px;
     border-radius: 50%;
-    background-color: #333;
+    background-color: #ccc;
+    background-size: cover;
+    background-position: center;
     cursor: pointer;
   }
-</style> 
+</style>

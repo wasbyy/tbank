@@ -1,14 +1,57 @@
 <script lang="ts">
   import { onMount } from 'svelte';
+  import { goto } from '$app/navigation';
 
-  let email = '';
+  let username = '';
   let password = '';
   let rememberMe = false;
   let passwordInput: HTMLInputElement;
+  let errorMessage = '';
+  let isLoading = false;
 
-  function handleLogin() {
-    // Here you would typically handle login
-    console.log('Login attempt', { email, password, rememberMe });
+  async function handleLogin() {
+    if (!username || !password) {
+      errorMessage = 'Пожалуйста, заполните все поля';
+      return;
+    }
+
+    try {
+      isLoading = true;
+      errorMessage = '';
+      
+      // Формируем данные в формате x-www-form-urlencoded, как ожидает FastAPI OAuth2
+      const formData = new URLSearchParams();
+      formData.append('username', username);
+      formData.append('password', password);
+      
+      const response = await fetch('http://localhost:8000/token', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: formData,
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        errorMessage = errorData.detail || 'Неверный логин или пароль';
+        return;
+      }
+
+      const tokenData = await response.json();
+      console.log('Вход успешен:', tokenData);
+      
+      // Сохраняем токен в localStorage для дальнейшего использования
+      localStorage.setItem('access_token', tokenData.access_token);
+      
+      // Перенаправляем на главную страницу после успешного входа
+      goto('/');
+    } catch (error) {
+      console.error('Ошибка при входе:', error);
+      errorMessage = 'Произошла ошибка при подключении к серверу';
+    } finally {
+      isLoading = false;
+    }
   }
 
   function togglePassword() {
@@ -18,68 +61,76 @@
   }
 </script>
 
-<div class="page-container">
-  <div class="content-wrapper">
-    <div class="left-section">
-      <h1>Твой ФФ</h1>
-      <h2>университет в одном клике.</h2>
-      <div class="phone-image">
-        <img src="/phone.svg" alt="Телефон с лицом" />
-      </div>
-    </div>
-    
-    <div class="registration-modal">
-      <div class="modal-header">
-        <h3>Вход</h3>
-        <a href="/" class="close-button">×</a>
+<div class="fullscreen-container">
+  <div class="page-container">
+    <div class="content-wrapper">
+      <div class="left-section">
+        <h1>Твой ФФ</h1>
+        <h2>университет в одном клике.</h2>
+        <div class="phone-image">
+          <img src="/phone.svg" alt="Телефон с лицом" />
+        </div>
       </div>
       
-      <div class="modal-body">
-        <div class="form-group">
-          <label for="email">Email</label>
-          <input 
-            type="email" 
-            id="email" 
-            bind:value={email} 
-            placeholder="Введите email" 
-            required
-          />
+      <div class="registration-modal">
+        <div class="modal-header">
+          <h3>Вход</h3>
+          <a href="/" class="close-button">×</a>
         </div>
         
-        <div class="form-group">
-          <label for="password">Password</label>
-          <div class="password-input-container">
+        <div class="modal-body">
+          {#if errorMessage}
+            <div class="error-message">
+              {errorMessage}
+            </div>
+          {/if}
+          
+          <div class="form-group">
+            <label for="username">Логин</label>
             <input 
-              type="password"
-              id="password" 
-              bind:value={password}
-              bind:this={passwordInput}
-              placeholder="Введите пароль" 
+              type="text" 
+              id="username" 
+              bind:value={username} 
+              placeholder="Введите логин" 
               required
             />
-            <button class="toggle-password" on:click={togglePassword}>
-              <img src="/showoff.svg" alt="Toggle password" />
-            </button>
           </div>
-        </div>
+          
+          <div class="form-group">
+            <label for="password">Пароль</label>
+            <div class="password-input-container">
+              <input 
+                type="password"
+                id="password" 
+                bind:value={password}
+                bind:this={passwordInput}
+                placeholder="Введите пароль" 
+                required
+              />
+              <button class="toggle-password" on:click={togglePassword}>
+                <img src="/showoff.svg" alt="Toggle password" />
+              </button>
+            </div>
+          </div>
 
-        <div class="additional-options">
-          <label class="remember-me">
-            <input 
-              type="checkbox" 
-              bind:checked={rememberMe}
-            />
-            <span>Запомнить меня</span>
-          </label>
-          <a href="/forgot-password" class="forgot-password">Забыл пароль</a>
-        </div>
-        
-        <button class="login-button" on:click={handleLogin}>
-          Войти
-        </button>
-        
-        <div class="register-link">
-          <span>У вас еще нет аккаунта? <a href="/register">Зарегистрироваться</a></span>
+          <div class="additional-options">
+            <label class="remember-me">
+              <input 
+                type="checkbox" 
+                bind:checked={rememberMe}
+              />
+              <span>Запомнить меня</span>
+            </label>
+            <a href="/forgot-password" class="forgot-password">Забыл пароль</a>
+          </div>
+          
+          <button class="login-button" on:click={handleLogin} disabled={isLoading}>
+            {isLoading ? 'Вход...' : 'Войти'}
+          </button>
+          
+          <div class="register-link">
+            <span>У вас еще нет аккаунта? <a href="/register">Зарегистрироваться</a></span>
+          </div>
         </div>
       </div>
     </div>
@@ -120,11 +171,26 @@
     padding: 0;
     font-family: 'SF Pro Display', Arial, sans-serif;
     background-color: #333333;
+    overflow-x: hidden;
+  }
+
+  .fullscreen-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
   }
 
   .page-container {
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
-    min-height: 100vh;
+    height: 100%;
     background-color: #ffffff;
     background-image: url('/fone1.svg');
     background-size: cover;
@@ -133,6 +199,10 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    box-sizing: border-box;
   }
 
   .content-wrapper {
@@ -335,5 +405,19 @@
 
   .toggle-password:hover img {
     opacity: 0.8;
+  }
+
+  .error-message {
+    background-color: rgba(255, 0, 0, 0.1);
+    color: #ff3333;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    font-size: 14px;
+  }
+
+  button:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
   }
 </style> 

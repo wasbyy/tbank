@@ -46,7 +46,9 @@
       Привет! Я - физик,<br>твой виртуальный помощник
     </div>
   {/if}
-  <img src="/chatbot head.svg" alt="Чат-бот" on:click={toggleChatDialog} />
+  <div class="bot-icon" on:click={toggleChatDialog}>
+    <img src="/chatbot head.svg" alt="Чат-бот" />
+  </div>
 </div>
 
 {#if showChatDialog}
@@ -348,5 +350,27 @@
       border-radius: 0;
       margin-right: 0;
     }
+  }
+
+  .bot-icon {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-color: transparent;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    z-index: 1000;
+    box-shadow: none;
+  }
+  
+  .bot-icon img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
   }
 </style> 

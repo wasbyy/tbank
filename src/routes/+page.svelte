@@ -80,28 +80,6 @@
 </script>
 
 <div class="container">
-  <header class="navbar">
-    <div class="nav-buttons">
-      <button class="nav-button">
-        Расписание <span class="icon"><img src="/top1.svg" alt="Расписание" /></span>
-      </button>
-      <a href="/forum" class="nav-link">
-        <button class="nav-button">
-          Форум <span class="icon"><img src="/top2.svg" alt="Форум" /></span>
-        </button>
-      </a>
-      <a href="/" class="nav-link">
-        <button class="nav-button active">
-          Сервисы <span class="icon"><img src="/top3.svg" alt="Сервисы" /></span>
-        </button>
-      </a>
-    </div>
-  </header>
-
-  <div class="profile">
-    <div class="avatar"></div>
-  </div>
-
   <main>
     <h1 class="main-title">Твой ФФ - университет в одном клике.</h1>
 
@@ -275,79 +253,24 @@
     font-style: normal;
   }
 
-  :global(body) {
-    margin: 0;
-    padding: 0;
-    font-family: 'SF Pro Display', Arial, sans-serif;
-    background-color: #ffffff;
-  }
-
+  /* Container */
   .container {
+    padding: 0;
+    width: 100%;
+    margin: 0 auto;
+    position: relative;
+    overflow-x: hidden;
+  }
+  
+  /* Main content */
+  main {
+    padding: 20px;
     max-width: 1200px;
     margin: 0 auto;
-    padding: 0 20px;
-    position: relative;
+    box-sizing: border-box;
+    width: 100%;
   }
 
-  /* Navbar */
-  .navbar {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 20px 0;
-  }
-
-  .nav-buttons {
-    display: flex;
-    gap: 15px;
-  }
-
-  .nav-button {
-    background-color: #f0f0f0;
-    border: none;
-    border-radius: 20px;
-    padding: 8px 16px;
-    font-size: 16px;
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    cursor: pointer;
-  }
-
-  .icon {
-    font-size: 18px;
-    display: flex;
-    align-items: center;
-  }
-
-  .icon img {
-    width: 18px;
-    height: 18px;
-  }
-
-  .nav-link {
-    text-decoration: none;
-  }
-
-  .nav-button.active {
-    background-color: #e0e0e0;
-  }
-
-  /* Profile */
-  .profile {
-    position: fixed;
-    top: 20px;
-    right: 20px;
-  }
-
-  .avatar {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    background-color: #333;
-  }
-
-  /* Main content */
   .main-title {
     text-align: center;
     margin: 20px 0;
@@ -360,14 +283,15 @@
     justify-content: center;
     flex-wrap: wrap;
     gap: 15px;
-    margin: 20px 0;
+    margin: 20px auto;
+    width: 100%;
+    padding: 0;
   }
 
   .circular-button {
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: auto;
     margin: 0 10px;
     cursor: pointer;
   }
@@ -381,13 +305,16 @@
 
   /* Services section */
   .services {
-    margin: 20px 0;
-    padding: 0 20px;
+    margin: 20px auto;
+    padding: 0;
+    width: 100%;
+    text-align: center;
   }
 
   .services h2 {
     margin-bottom: 30px;
     font-size: 24px;
+    text-align: left;
     padding-left: 20px;
   }
 
@@ -395,6 +322,7 @@
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 25px;
+    width: 100%;
   }
 
   .service-card {
@@ -455,13 +383,14 @@
     position: fixed;
     top: 0;
     left: 0;
-    width: 100%;
-    height: 100%;
+    width: 100vw;
+    height: 100vh;
     background-color: rgba(0, 0, 0, 0.9);
     z-index: 2000;
     display: flex;
     justify-content: center;
     align-items: center;
+    margin: 0;
   }
   
   .stories-slider {
@@ -621,6 +550,7 @@
     -webkit-box-orient: vertical;
   }
   
+  /* Story Navigation */
   .story-navigation {
     position: fixed;
     top: 50%;
@@ -680,6 +610,20 @@
     .story-image {
       width: 70px;
       height: 70px;
+    }
+    
+    .story-nav-button {
+      width: 32px;
+      height: 32px;
+      margin: 0 10px;
+    }
+    
+    .story-nav-button.prev {
+      margin-left: 15px;
+    }
+    
+    .story-nav-button.next {
+      margin-right: 15px;
     }
   }
 </style>

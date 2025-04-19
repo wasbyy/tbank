@@ -1,16 +1,65 @@
 <script lang="ts">
   import { onMount } from 'svelte';
+  import { goto } from '$app/navigation';
 
-  let name = '';
+  let firstName = '';
+  let lastName = '';
+  let username = '';
   let email = '';
   let password = '';
   let confirmPassword = '';
   let passwordInput: HTMLInputElement;
   let confirmPasswordInput: HTMLInputElement;
+  let errorMessage = '';
+  let isLoading = false;
 
-  function handleRegister() {
-    // Here you would typically handle registration
-    console.log('Registration attempt', { name, email, password, confirmPassword });
+  async function handleRegister() {
+    if (password !== confirmPassword) {
+      errorMessage = 'Пароли не совпадают';
+      return;
+    }
+
+    if (!firstName || !lastName || !username || !email || !password) {
+      errorMessage = 'Пожалуйста, заполните все поля';
+      return;
+    }
+
+    try {
+      isLoading = true;
+      errorMessage = '';
+      
+      const response = await fetch('http://localhost:8000/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          first_name: firstName,
+          last_name: lastName,
+          username: username,
+          email: email,
+          password: password,
+          role: 'student', // По умолчанию регистрируем студентов
+        }),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        errorMessage = errorData.detail || 'Ошибка при регистрации';
+        return;
+      }
+
+      const userData = await response.json();
+      console.log('Регистрация успешна:', userData);
+      
+      // После успешной регистрации перенаправляем на страницу входа
+      goto('/login');
+    } catch (error) {
+      console.error('Ошибка при регистрации:', error);
+      errorMessage = 'Произошла ошибка при подключении к серверу';
+    } finally {
+      isLoading = false;
+    }
   }
 
   function togglePassword(input: HTMLInputElement) {
@@ -37,13 +86,41 @@
       </div>
       
       <div class="modal-body">
+        {#if errorMessage}
+          <div class="error-message">
+            {errorMessage}
+          </div>
+        {/if}
+        
         <div class="form-group">
-          <label for="name">Имя</label>
+          <label for="firstName">Имя</label>
           <input 
             type="text" 
-            id="name" 
-            bind:value={name} 
+            id="firstName" 
+            bind:value={firstName} 
             placeholder="Введите ваше имя" 
+            required
+          />
+        </div>
+        
+        <div class="form-group">
+          <label for="lastName">Фамилия</label>
+          <input 
+            type="text" 
+            id="lastName" 
+            bind:value={lastName} 
+            placeholder="Введите вашу фамилию" 
+            required
+          />
+        </div>
+        
+        <div class="form-group">
+          <label for="username">Логин</label>
+          <input 
+            type="text" 
+            id="username" 
+            bind:value={username} 
+            placeholder="Придумайте логин" 
             required
           />
         </div>
@@ -93,8 +170,8 @@
           </div>
         </div>
         
-        <button class="register-button" on:click={handleRegister}>
-          Зарегистрироваться
+        <button class="register-button" on:click={handleRegister} disabled={isLoading}>
+          {isLoading ? 'Регистрация...' : 'Зарегистрироваться'}
         </button>
         
         <div class="login-link">
@@ -139,10 +216,15 @@
     padding: 0;
     font-family: 'SF Pro Display', Arial, sans-serif;
     background-color: #333333;
+    overflow-x: hidden;
   }
 
   .page-container {
+    position: fixed;
+    top: 0;
+    left: 0;
     width: 100%;
+    height: 100%;
     min-height: 100vh;
     background-color: #ffffff;
     background-image: url('/fone1.svg');
@@ -152,6 +234,9 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
   }
 
   .content-wrapper {
@@ -327,5 +412,19 @@
 
   .toggle-password:hover img {
     opacity: 0.8;
+  }
+
+  .error-message {
+    background-color: rgba(255, 0, 0, 0.1);
+    color: #ff3333;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    font-size: 14px;
+  }
+
+  button:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
   }
 </style> 
