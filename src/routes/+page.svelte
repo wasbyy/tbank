@@ -145,10 +145,12 @@
           <h3>Бюро находок</h3>
         </div>
         <div class="service-card">
-          <div class="service-icon">
-            <img src="/main_page/cute shopping basket.svg" alt="Меню столовой" />
-          </div>
-          <h3>Меню столовой</h3>
+          <a href="/menu" class="card-link">
+            <div class="service-icon">
+              <img src="/main_page/cute shopping basket.svg" alt="Меню столовой" />
+            </div>
+            <h3>Меню столовой</h3>
+          </a>
         </div>
         <div class="service-card">
           <div class="service-icon">

@@ -124,7 +124,7 @@
     align-items: center;
     justify-content: center;
     z-index: 1000;
-    padding: 5px;
+    padding: 15px;
   }
 
   .chat-bot img {
