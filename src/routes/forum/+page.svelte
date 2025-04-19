@@ -15,7 +15,7 @@
     comments: Comment[];
   }
   
-  let avatar = '/avatar.png';
+  let avatar = '/account_photo.svg';
   
   let posts: Post[] = [
     {
@@ -76,7 +76,11 @@
   </header>
 
   <div class="profile">
-    <div class="avatar"></div>
+    <a href="/account" class="profile-link">
+      <div class="avatar">
+        <img src={avatar} alt="Profile" />
+      </div>
+    </a>
   </div>
 
   <main>
@@ -306,13 +310,30 @@
     width: 40px;
     height: 40px;
     border-radius: 50%;
-    background-color: #333;
+    background-color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+  }
+
+  .avatar img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
   }
 
   .profile {
     position: fixed;
     top: 20px;
     right: 20px;
+    z-index: 100;
+  }
+
+  .profile-link {
+    display: block;
+    text-decoration: none;
   }
 
   /* Forum Header */

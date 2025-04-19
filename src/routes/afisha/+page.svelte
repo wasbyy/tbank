@@ -1,18 +1,9 @@
-<script lang="ts">
+<script>
   import { onMount } from 'svelte';
 
   let avatar = '/avatar.png';
   
-  interface Event {
-    id: number;
-    title: string;
-    description: string;
-    image: string;
-    tag: string;
-    fullDescription: string;
-  }
-
-  let events: Event[] = [
+  let events = [
     {
       id: 1,
       title: 'Универсиада «Ломоносов» 2025',

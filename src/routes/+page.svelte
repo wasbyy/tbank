@@ -1,81 +1,58 @@
 <script lang="ts">
   import { onMount } from 'svelte';
   
-  let avatar = '/avatar.png';
-  let showStories = false;
-  let currentStoryIndex = 0;
+  let avatar = '/account_photo.svg';
+  let activeStory = 0;
+  let showStory = false;
   
-  interface Story {
-    id: number;
-    image: string;
-    title: string;
-    content: string;
+  function openStory(index: number) {
+    activeStory = index;
+    showStory = true;
   }
   
-  let stories: Story[] = [
-    {
-      id: 1,
-      image: '/main_page/stories1.svg',
-      title: 'Новости факультета',
-      content: 'Подробное содержание новостей факультета. Здесь будет отображаться полная информация о событии.'
-    },
-    {
-      id: 2,
-      image: '/main_page/stories2.svg',
-      title: 'Студенческая жизнь',
-      content: 'Подробное содержание о студенческой жизни. Здесь будет отображаться полная информация о событии.'
-    },
-    {
-      id: 3,
-      image: '/main_page/stories3.svg',
-      title: 'Научные достижения',
-      content: 'Подробное содержание о научных достижениях. Здесь будет отображаться полная информация о событии.'
-    },
-    {
-      id: 4,
-      image: '/main_page/stories4.svg',
-      title: 'Конференции',
-      content: 'Подробное содержание о конференциях. Здесь будет отображаться полная информация о событии.'
-    },
-    {
-      id: 5,
-      image: '/main_page/stories5.svg',
-      title: 'Стажировки',
-      content: 'Подробное содержание о стажировках. Здесь будет отображаться полная информация о событии.'
-    },
-    {
-      id: 6,
-      image: '/main_page/stories6.svg',
-      title: 'Спортивные события',
-      content: 'Подробное содержание о спортивных событиях. Здесь будет отображаться полная информация о событии.'
-    }
-  ];
-  
-  function openStories(index: number) {
-    currentStoryIndex = index;
-    showStories = true;
-  }
-  
-  function closeStories() {
-    showStories = false;
+  function closeStory() {
+    showStory = false;
   }
   
   function nextStory() {
-    if (currentStoryIndex < stories.length - 1) {
-      currentStoryIndex++;
+    if (activeStory < stories.length - 1) {
+      activeStory++;
     } else {
-      closeStories();
+      activeStory = 0;
     }
   }
   
   function prevStory() {
-    if (currentStoryIndex > 0) {
-      currentStoryIndex--;
+    if (activeStory > 0) {
+      activeStory--;
+    } else {
+      activeStory = stories.length - 1;
     }
   }
   
+  let stories = [
+    {
+      id: 1,
+      title: "Привет!",
+      image: "/stories/story1.jpg",
+      content: "Добро пожаловать в университет! Здесь ты найдешь множество возможностей для развития."
+    },
+    {
+      id: 2,
+      title: "Студенческая жизнь",
+      image: "/stories/story2.jpg",
+      content: "Участвуй в мероприятиях, находи друзей и развивайся вместе с нами!"
+    },
+    {
+      id: 3,
+      title: "Афиша",
+      image: "/stories/story3.jpg",
+      content: "Не пропусти интересные события в нашем университете!"
+    }
+  ];
+  
   onMount(() => {
-    // Any initialization code can go here
+    // Initialization code if needed
   });
 </script>
 
@@ -99,7 +76,11 @@
   </header>
 
   <div class="profile">
-    <div class="avatar"></div>
+    <a href="/account" class="profile-link">
+      <div class="avatar">
+        <img src={avatar} alt="Profile" />
+      </div>
+    </a>
   </div>
 
   <main>
@@ -108,7 +89,7 @@
     <!-- Main circular buttons -->
     <div class="circular-buttons">
       {#each stories as story, index}
-        <div class="circular-button" on:click={() => openStories(index)}>
+        <div class="circular-button" on:click={() => openStory(index)}>
           <img src={story.image} alt={story.title} class="story-image">
         </div>
       {/each}
@@ -163,70 +144,70 @@
   </main>
 </div>
 
-{#if showStories}
+{#if showStory}
   <div class="stories-overlay">
     <div class="stories-slider">
       <div class="progress-bar">
         {#each stories as _, i}
-          <div class="progress-segment {i === currentStoryIndex ? 'active' : i < currentStoryIndex ? 'completed' : ''}"></div>
+          <div class="progress-segment {i === activeStory ? 'active' : i < activeStory ? 'completed' : ''}"></div>
         {/each}
       </div>
       
-      <button class="close-stories" on:click={closeStories}>&times;</button>
+      <button class="close-stories" on:click={closeStory}>&times;</button>
 
       <div class="stories-carousel">
-        {#if currentStoryIndex > 1}
+        {#if activeStory > 1}
           <div class="story-card far-prev-card" on:click={() => prevStory()}>
             <div class="card-content">
-              <h2 class="story-title">{stories[currentStoryIndex - 2].title}</h2>
+              <h2 class="story-title">{stories[activeStory - 2].title}</h2>
               <div class="story-image-container">
-                <img src={stories[currentStoryIndex - 2].image} alt={stories[currentStoryIndex - 2].title} />
+                <img src={stories[activeStory - 2].image} alt={stories[activeStory - 2].title} />
               </div>
             </div>
             <div class="card-overlay"></div>
           </div>
         {/if}
 
-        {#if currentStoryIndex > 0}
+        {#if activeStory > 0}
           <div class="story-card prev-card" on:click={() => prevStory()}>
             <div class="card-content">
-              <h2 class="story-title">{stories[currentStoryIndex - 1].title}</h2>
+              <h2 class="story-title">{stories[activeStory - 1].title}</h2>
               <div class="story-image-container">
-                <img src={stories[currentStoryIndex - 1].image} alt={stories[currentStoryIndex - 1].title} />
+                <img src={stories[activeStory - 1].image} alt={stories[activeStory - 1].title} />
               </div>
-              <p class="story-description">{stories[currentStoryIndex - 1].content}</p>
+              <p class="story-description">{stories[activeStory - 1].content}</p>
             </div>
             <div class="card-overlay"></div>
           </div>
         {/if}
         
         <div class="story-card current-card">
-          <h2 class="story-title">{stories[currentStoryIndex].title}</h2>
+          <h2 class="story-title">{stories[activeStory].title}</h2>
           <div class="story-image-container">
-            <img src={stories[currentStoryIndex].image} alt={stories[currentStoryIndex].title} />
+            <img src={stories[activeStory].image} alt={stories[activeStory].title} />
           </div>
-          <p class="story-description">{stories[currentStoryIndex].content}</p>
+          <p class="story-description">{stories[activeStory].content}</p>
         </div>
         
-        {#if currentStoryIndex < stories.length - 1}
+        {#if activeStory < stories.length - 1}
           <div class="story-card next-card" on:click={() => nextStory()}>
             <div class="card-content">
-              <h2 class="story-title">{stories[currentStoryIndex + 1].title}</h2>
+              <h2 class="story-title">{stories[activeStory + 1].title}</h2>
               <div class="story-image-container">
-                <img src={stories[currentStoryIndex + 1].image} alt={stories[currentStoryIndex + 1].title} />
+                <img src={stories[activeStory + 1].image} alt={stories[activeStory + 1].title} />
               </div>
-              <p class="story-description">{stories[currentStoryIndex + 1].content}</p>
+              <p class="story-description">{stories[activeStory + 1].content}</p>
             </div>
             <div class="card-overlay"></div>
           </div>
         {/if}
 
-        {#if currentStoryIndex < stories.length - 2}
+        {#if activeStory < stories.length - 2}
           <div class="story-card far-next-card" on:click={() => nextStory()}>
             <div class="card-content">
-              <h2 class="story-title">{stories[currentStoryIndex + 2].title}</h2>
+              <h2 class="story-title">{stories[activeStory + 2].title}</h2>
               <div class="story-image-container">
-                <img src={stories[currentStoryIndex + 2].image} alt={stories[currentStoryIndex + 2].title} />
+                <img src={stories[activeStory + 2].image} alt={stories[activeStory + 2].title} />
               </div>
             </div>
             <div class="card-overlay"></div>
@@ -235,10 +216,10 @@
       </div>
       
       <div class="story-navigation">
-        <button class="story-nav-button prev" on:click={prevStory} disabled={currentStoryIndex === 0}>
+        <button class="story-nav-button prev" on:click={prevStory} disabled={activeStory === 0}>
           <span>❮</span>
         </button>
-        <button class="story-nav-button next" on:click={nextStory} disabled={currentStoryIndex === stories.length - 1}>
+        <button class="story-nav-button next" on:click={nextStory} disabled={activeStory === stories.length - 1}>
           <span>❯</span>
         </button>
       </div>
@@ -338,13 +319,30 @@
     position: fixed;
     top: 20px;
     right: 20px;
+    z-index: 100;
   }
-
+  
+  .profile-link {
+    display: block;
+    text-decoration: none;
+  }
+  
   .avatar {
     width: 40px;
     height: 40px;
     border-radius: 50%;
-    background-color: #333;
+    background-color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+  }
+  
+  .avatar img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
   }
 
   /* Main content */
