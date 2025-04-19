@@ -2,7 +2,6 @@
   import { onMount } from 'svelte';
 
   let avatar = '/avatar.png';
-  let showChatBubble = true;
   
   interface Event {
     id: number;
@@ -31,10 +30,6 @@
       fullDescription: 'Полное описание путёвок в здравницы МГУ'
     }
   ];
-  
-  function closeChatBubble() {
-    showChatBubble = false;
-  }
   
   onMount(() => {
     // Any initialization code can go here
@@ -108,16 +103,6 @@
         {/each}
       </div>
     </main>
-
-    <div class="chat-bot">
-      {#if showChatBubble}
-        <div class="chat-bubble">
-          <span class="close-bubble" on:click={closeChatBubble}>&times;</span>
-          Привет! Я - физик,<br>твой виртуальный помощник
-        </div>
-      {/if}
-      <img src="/chatbot head.svg" alt="Чат-бот" />
-    </div>
   </div>
 </div>
 
@@ -354,66 +339,6 @@
 
   .details-button:hover {
     background-color: #132a62;
-  }
-
-  /* Chat Bot */
-  .chat-bot {
-    position: fixed;
-    bottom: 30px;
-    right: 30px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 100;
-  }
-
-  .chat-bot img {
-    width: 65px;
-    height: 65px;
-  }
-
-  .chat-bubble {
-    position: absolute;
-    bottom: 70px;
-    right: 20px;
-    background-color: #fff;
-    padding: 10px 20px;
-    border-radius: 18px;
-    width: 320px;
-    max-width: 90vw;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    font-size: 14px;
-    line-height: 1.4;
-    z-index: 10;
-    border: 1px solid #e0e0e0;
-    text-align: left;
-  }
-
-  .close-bubble {
-    position: absolute;
-    top: 5px;
-    right: 12px;
-    font-size: 20px;
-    font-weight: bold;
-    cursor: pointer;
-    color: #aaa;
-    line-height: 1;
-  }
-
-  .close-bubble:hover {
-    color: #555;
-  }
-
-  .chat-bubble:after {
-    content: '';
-    position: absolute;
-    bottom: -10px;
-    right: 20px;
-    width: 0;
-    height: 0;
-    border-left: 10px solid transparent;
-    border-right: 10px solid transparent;
-    border-top: 10px solid #fff;
   }
 
   @media (max-width: 768px) {

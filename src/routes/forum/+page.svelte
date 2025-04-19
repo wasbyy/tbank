@@ -221,10 +221,6 @@
       </div>
     </div>
   </main>
-  
-  <div class="chat-bot">
-    <img src="/chatbot head.svg" alt="Чат-бот" />
-  </div>
 </div>
 
 <style>
@@ -613,23 +609,6 @@
     font-size: 14px;
     margin: 0;
     line-height: 1.4;
-  }
-
-  /* Chat Bot */
-  .chat-bot {
-    position: fixed;
-    bottom: 30px;
-    right: 30px;
-    width: 50px;
-    height: 50px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .chat-bot img {
-    width: 65px;
-    height: 65px;
   }
 
   .nav-link {
