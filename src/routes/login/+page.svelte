@@ -1,14 +1,57 @@
 <script lang="ts">
   import { onMount } from 'svelte';
+  import { goto } from '$app/navigation';
 
-  let email = '';
+  let username = '';
   let password = '';
   let rememberMe = false;
   let passwordInput: HTMLInputElement;
+  let errorMessage = '';
+  let isLoading = false;
 
-  function handleLogin() {
-    // Here you would typically handle login
-    console.log('Login attempt', { email, password, rememberMe });
+  async function handleLogin() {
+    if (!username || !password) {
+      errorMessage = 'Пожалуйста, заполните все поля';
+      return;
+    }
+
+    try {
+      isLoading = true;
+      errorMessage = '';
+      
+      // Формируем данные в формате x-www-form-urlencoded, как ожидает FastAPI OAuth2
+      const formData = new URLSearchParams();
+      formData.append('username', username);
+      formData.append('password', password);
+      
+      const response = await fetch('http://localhost:8000/token', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: formData,
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        errorMessage = errorData.detail || 'Неверный логин или пароль';
+        return;
+      }
+
+      const tokenData = await response.json();
+      console.log('Вход успешен:', tokenData);
+      
+      // Сохраняем токен в localStorage для дальнейшего использования
+      localStorage.setItem('access_token', tokenData.access_token);
+      
+      // Перенаправляем на главную страницу после успешного входа
+      goto('/');
+    } catch (error) {
+      console.error('Ошибка при входе:', error);
+      errorMessage = 'Произошла ошибка при подключении к серверу';
+    } finally {
+      isLoading = false;
+    }
   }
 
   function togglePassword() {
@@ -35,19 +78,25 @@
       </div>
       
       <div class="modal-body">
+        {#if errorMessage}
+          <div class="error-message">
+            {errorMessage}
+          </div>
+        {/if}
+        
         <div class="form-group">
-          <label for="email">Email</label>
+          <label for="username">Логин</label>
           <input 
-            type="email" 
-            id="email" 
-            bind:value={email} 
-            placeholder="Введите email" 
+            type="text" 
+            id="username" 
+            bind:value={username} 
+            placeholder="Введите логин" 
             required
           />
         </div>
         
         <div class="form-group">
-          <label for="password">Password</label>
+          <label for="password">Пароль</label>
           <div class="password-input-container">
             <input 
               type="password"
@@ -74,8 +123,8 @@
           <a href="/forgot-password" class="forgot-password">Забыл пароль</a>
         </div>
         
-        <button class="login-button" on:click={handleLogin}>
-          Войти
+        <button class="login-button" on:click={handleLogin} disabled={isLoading}>
+          {isLoading ? 'Вход...' : 'Войти'}
         </button>
         
         <div class="register-link">
@@ -335,5 +384,19 @@
 
   .toggle-password:hover img {
     opacity: 0.8;
+  }
+
+  .error-message {
+    background-color: rgba(255, 0, 0, 0.1);
+    color: #ff3333;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    font-size: 14px;
+  }
+
+  button:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
   }
 </style> 
